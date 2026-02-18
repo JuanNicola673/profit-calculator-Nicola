@@ -12,19 +12,19 @@
   <style>
     .navButton {
       display: inline-block;
-      padding: 12 18;
+      padding: 12px 18px;
       background-color: #165bdb;
-      color: #ffffff ;
+      color: #ffffff !important;
       font-weight: bold;
-      border-radius: 8;
+      border-radius: 8px;
       text-decoration: none;
-      transition: 0.3;
-      margin-bottom: 16;
-      margin-top: 10;
+      transition: 0.3s;
+      margin-bottom: 16px;
+      margin-top: 10px;
     }
     .navButton:hover {
-      background-color: #ffa012 ;
-      color: #ffffff ;
+      background-color: #ffa012 !important;
+      color: #ffffff !important;
     }
   </style>
 </head>
@@ -77,20 +77,20 @@
   </table>
 
 <script>
-{
-   tbody = document.querySelector('#portfolio tbody');
-   addBtn = document.getElementById('addRow');
-  removeBtn = document.getElementById('removeRow');
- resetBtn = document.getElementById('reset');
-  exportBtn = document.getElementById('export');
+(function(){
+  const tbody = document.querySelector('#portfolio tbody');
+  const addBtn = document.getElementById('addRow');
+  const removeBtn = document.getElementById('removeRow');
+  const resetBtn = document.getElementById('reset');
+  const exportBtn = document.getElementById('export');
 
-   fmt(n){
-     (isNaN(n) || !isFinite(n))  '—';
-     Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  function fmt(n){
+    if (isNaN(n) || !isFinite(n)) return '—';
+    return Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
   }
 
-   createRow(ticker='', qty='', buy='', cur=''){
-    tr = document.createElement('tr');
+  function createRow(ticker='', qty='', buy='', cur=''){
+    const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><input type="text" class="ticker" value="${ticker}" placeholder="AAPL / SPY"></td>
       <td><input type="number" step="any" min="0" class="qty" value="${qty}"></td>
@@ -105,31 +105,31 @@
       tr.querySelector('.' + c).addEventListener('input', calculate);
     });
     tbody.appendChild(tr);
-   = tr;
+    return tr;
   }
 
- = calculate(){
-    = rows = Array.from(tbody.querySelectorAll('tr'));
-   = totalQty = 0, totalCost = 0, totalValue = 0;
+  function calculate(){
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    let totalQty = 0, totalCost = 0, totalValue = 0;
 
     rows.forEach(tr=>{
-      [ q = parseFloat(tr.querySelector('.qty').value) || 0;
-      [ buy = parseFloat(tr.querySelector('.buy').value) || 0;
-     [ cur = parseFloat(tr.querySelector('.cur').value) || 0;
+      const q = parseFloat(tr.querySelector('.qty').value) || 0;
+      const buy = parseFloat(tr.querySelector('.buy').value) || 0;
+      const cur = parseFloat(tr.querySelector('.cur').value) || 0;
 
-     [ cost = q * buy;
-      [ value = q * cur;
-      [pl = value - cost;
-     [ pct = cost === 0 ? NaN : (pl / cost) * 100;
+      const cost = q * buy;
+      const value = q * cur;
+      const pl = value - cost;
+      const pct = cost === 0 ? NaN : (pl / cost) * 100;
 
       tr.querySelector('.cost').textContent = fmt(cost);
       tr.querySelector('.value').textContent = fmt(value);
 
-      [ plCell = tr.querySelector('.pl');
+      const plCell = tr.querySelector('.pl');
       plCell.textContent = fmt(pl);
       plCell.className = 'pl ' + (pl>0 ? 'pos' : (pl<0 ? 'neg' : ''));
 
-      [ pctCell = tr.querySelector('.pct');
+      const pctCell = tr.querySelector('.pct');
       pctCell.textContent = isNaN(pct) ? '—' : fmt(pct) + ' %';
       pctCell.className = 'pct ' + (pct>0 ? 'pos' : (pct<0 ? 'neg' : ''));
 
@@ -138,8 +138,8 @@
       totalValue += value;
     });
 
-    [ grandPL = totalValue - totalCost;
-    [ grandPct = totalCost === 0 ? NaN : (grandPL / totalCost) * 100;
+    const grandPL = totalValue - totalCost;
+    const grandPct = totalCost === 0 ? NaN : (grandPL / totalCost) * 100;
 
     document.getElementById('totalQty').textContent = totalQty || '—';
     document.getElementById('totalCost').textContent = fmt(totalCost);
@@ -147,7 +147,7 @@
     document.getElementById('grandCost').textContent = fmt(totalCost);
     document.getElementById('grandValue').textContent = fmt(totalValue);
 
-    [ gPLCell = document.getElementById('grandPL');
+    const gPLCell = document.getElementById('grandPL');
     gPLCell.textContent = fmt(grandPL);
     gPLCell.className = (grandPL>0 ? 'pos' : (grandPL<0 ? 'neg' : ''));
 
