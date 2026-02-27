@@ -24,7 +24,27 @@ function irYahoo(){
   let t = document.getElementById("ticker").value.toUpperCase();
   window.open("https://finance.yahoo.com/quote/" + t, "_blank");
 }
-</script>        </ul>
+</script>  
+    <button onclick="irSchwab()" style="
+  background-color: #005daa;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+">
+  Conectar con Schwab
+</button>
+
+<script>
+function irSchwab(){
+  window.open(
+    "https://client.schwab.com/Areas/Access/Login?SessionTimeOut=y&ReturnUrl=%2fapp%2faccounts%2fsummary%2f",
+    "_blank"
+  );
+}
+</script>    </ul>
 
     <h1>Profit Calculator</h1>
 
