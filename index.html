@@ -16,10 +16,15 @@
         <li><a href="calculator.html">Calculadora</a></li>
         <li><a href="stylesprofitcalculator.css" ></a> </a></li>
 
-        <a href="https://finance.yahoo.com/quote/NVDA" target="_blank">
-  <button>Ver NVIDIA en Yahoo Finance</button>
-</a>    
-    </ul>
+        <input type="text" id="ticker" placeholder="Ej: NVDA">
+<button onclick="irYahoo()">Ver en Yahoo</button>
+
+<script>
+function irYahoo(){
+  let t = document.getElementById("ticker").value.toUpperCase();
+  window.open("https://finance.yahoo.com/quote/" + t, "_blank");
+}
+</script>    </ul>
 
     <h1>Profit Calculator</h1>
 
