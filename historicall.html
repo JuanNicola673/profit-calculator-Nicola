@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Simulación Histórica</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylesprofitcalculator.css">
+</head>
+
+<body>
+
+<div class="main-container">
+  <h1>Simulación Histórica</h1>
+  <p>Descubre cuánto habría crecido tu inversión</p>
+
+  <div class="calculator-box">
+
+    <label>Ticker:</label>
+    <input type="text" id="ticker" placeholder="Ej: NVDA">
+
+    <label>Año inicial:</label>
+    <input type="number" id="year" placeholder="Ej: 2016">
+
+    <label>Inversión inicial ($):</label>
+    <input type="number" id="amount" placeholder="Ej: 1000">
+
+    <button onclick="simular()">Simular</button>
+
+    <div id="resultado" style="margin-top:20px;"></div>
+
+  </div>
+
+  <br>
+  <a href="index.html" class="nav-button">⬅ Volver</a>
+
+</div>
+
+<script>
+
+function simular() {
+  let ticker = document.getElementById("ticker").value.toUpperCase();
+  let year = parseInt(document.getElementById("year").value);
+  let amount = parseFloat(document.getElementById("amount").value);
+
+  if (!ticker || !year || !amount) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  // Simulación simple estimada (crecimiento promedio 20% anual)
+  let currentYear = new Date().getFullYear();
+  let years = currentYear - year;
+
+  if (years <= 0) {
+    alert("Año inválido");
+    return;
+  }
+
+  let annualGrowth = 0.20; // 20% estimado
+  let futureValue = amount * Math.pow((1 + annualGrowth), years);
+
+  let resultadoDiv = document.getElementById("resultado");
+
+  resultadoDiv.innerHTML = `
+    <h3>Resultado estimado</h3>
+    <p>Si hubieras invertido $${amount.toFixed(2)} en ${ticker} en ${year}:</p>
+    <p><strong>Valor estimado hoy: $${futureValue.toFixed(2)}</strong></p>
+    <p>Crecimiento estimado del 20% anual compuesto.</p>
+    <br>
+    <a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" class="nav-button">
+      Ver ${ticker} en Yahoo Finance
+    </a>
+  `;
+
+}
+
+</script>
+
+</body>
+</html>
